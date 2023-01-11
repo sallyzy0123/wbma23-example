@@ -1,6 +1,7 @@
-import {Text, View, Image, TouchableOpacity} from 'react-native';
+import {Image, StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 import React from 'react';
 import PropTypes from "prop-types";
+import {uploadsUrl} from '../utils/variables';
 
 const ListItem = (props) => {
   const item = props.singleMedia;
@@ -10,7 +11,7 @@ const ListItem = (props) => {
     >
       <Image
         style={{width: 180, height: 380, margin: 10}}
-        source={{uri: item.thumbnails.w160}}
+        source={{uri: uploadsUrl + item.thumbnails?.w160}}
       />
       <View>
         <Text
