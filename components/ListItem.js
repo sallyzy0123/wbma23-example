@@ -10,15 +10,15 @@ const ListItem = ({singleMedia, navigation}) => {
       onPress={() => {
         navigation.navigate('Single', item);
     }}>
-      <View style={styles.box}>
+      <View style={styles.photoBox}>
         <Image
           style={styles.image}
           source={{uri: uploadsUrl + item.thumbnails?.w160}}
         />
       </View>
-      <View style={styles.box}>
+      <View style={styles.textBox}>
         <Text style={styles.listTitle}>{item.title}</Text>
-        <Text>{item.description}</Text>
+        <Text style={styles.listDescription}>{item.description}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -27,22 +27,38 @@ const ListItem = ({singleMedia, navigation}) => {
 const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
-    backgroundColor: '#ccc',
-    marginBottom: 10,
+    backgroundColor: '#1b434d',
+    marginTop: 10,
+    marginHorizontal: 15,
+    borderBottomRightRadius: 40,
+	  borderTopRightRadius: 40,
+    borderBottomLeftRadius:65,
+	  overflow: 'hidden',
   },
-  box: {
+  photoBox: {
+    flex: 1,
+  },
+  textBox: {
     flex: 1,
     padding: 10,
   },
   image: {
     flex: 1,
     minHeight: 100,
+    borderBottomLeftRadius:65,
+    overflow: 'hidden',
   },
   listTitle: {
     fontWeight: 'bold',
+    color:'#faf3eb',
     fontSize: 20,
     paddingBottom: 15,
+    fontFamily:'Cochin',
   },
+  listDescription: {
+    fontSize: 15,
+    color:'#faf3eb',
+  }
 });
 
 ListItem.propTypes = {

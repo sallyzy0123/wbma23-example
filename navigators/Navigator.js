@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {NavigationContainer} from '@react-navigation/native';
+import {NavigationContainer, getFocusedRouteNameFromRoute,} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Home from '../views/Home';
@@ -9,6 +9,18 @@ import Single from '../views/Single';
 import Login from '../views/Login';
 import {MainContext} from '../contexts/MainContext';
 
+function getHeaderTitle(route) {
+  // If the focused route is not found, we need to assume it's the initial screen
+  // This can happen during if there hasn't been any navigation inside the screen
+  const routeName = getFocusedRouteNameFromRoute(route) ?? 'Home';
+
+  switch (routeName) {
+    case 'Home':
+      return 'Home';
+    case 'Profile':
+      return 'My profile';
+  };
+};
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -28,8 +40,8 @@ const TabScreen = () => {
             },
           };
         }}>
-            <Tab.Screen name="Home" component={Home}></Tab.Screen>
-            <Tab.Screen name="Profile" component={Profile}></Tab.Screen>
+            <Tab.Screen name="Home" component={Home} options={{headerShown:false}}></Tab.Screen>
+            <Tab.Screen name="Profile" component={Profile} options={{headerShown:false}}></Tab.Screen>
         </Tab.Navigator>
     );
 };
@@ -37,13 +49,27 @@ const TabScreen = () => {
 const StackScreen = () => {
   const {isLoggedIn} = useContext(MainContext);
   return (
-    <Stack.Navigator>
+    <Stack.Navigator 
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: '#e6def7',
+        },
+        headerTintColor: '#1b434d',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+      }
+      }
+    >
       {isLoggedIn ? (
         <>
           <Stack.Screen 
-            name="Tabs" 
+            name="Tabs"
             component={TabScreen} 
-            options={{headerShown:  false}}
+            options={{headerShown:  true}}
+            options={({ route }) => ({
+              headerTitle: getHeaderTitle(route),
+            })}
           />
           <Stack.Screen name="Single" component={Single} />
         </>
@@ -54,9 +80,10 @@ const StackScreen = () => {
     )
 }
 
+
 const Navigator = () => {
   return (
-    <NavigationContainer>
+    <NavigationContainer >
       <StackScreen />
     </NavigationContainer>
   );

@@ -5,8 +5,8 @@ import Navigator from './navigators/Navigator';
 const App = () => {
   return (
     <MainProvider>
-      <Navigator></Navigator>
-      <StatusBar style="auto" />
+      <Navigator />
+      <StatusBar style="auto"/>
     </MainProvider>
   );
 };
