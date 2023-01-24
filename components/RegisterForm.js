@@ -1,7 +1,7 @@
 import React from 'react';
-import {Button, Text, TextInput, View} from 'react-native';
 import {useUser} from '../hooks/ApiHooks';
 import {Controller, useForm} from 'react-hook-form';
+import {Card, Button, Text, Input} from '@rneui/themed';
 
 const RegisterForm = (props) => {
     // const {setIsLoggedIn} = useContext(MainContext);
@@ -27,13 +27,13 @@ const RegisterForm = (props) => {
     };
 
   return (
-      <View>
-        <Text>Registeration Form</Text>
+    <Card>
+      <Card.Title>Registration Form</Card.Title>
         <Controller 
           control={control}
           rules={{required: true, minLength: 3}}
           render={({field: {onChange, onBlur, value}}) => (
-              <TextInput 
+              <Input 
                 placeholder="Username"
                 onBlur={onBlur}
                 onChangeText={onChange}
@@ -48,7 +48,7 @@ const RegisterForm = (props) => {
           control={control}
           rules={{required: true, minLength: 5}}
           render={({field: {onChange, onBlur, value}}) => (
-              <TextInput 
+              <Input 
                 placeholder="Password"
                 onBlur={onBlur}
                 onChangeText={onChange}
@@ -63,7 +63,7 @@ const RegisterForm = (props) => {
           control={control}
           rules={{required: true}}
           render={({field: {onChange, onBlur, value}}) => (
-              <TextInput 
+              <Input 
                 placeholder="Email"
                 onBlur={onBlur}
                 onChangeText={onChange}
@@ -77,7 +77,7 @@ const RegisterForm = (props) => {
           control={control}
           rules={{minLength: 3}}
           render={({field: {onChange, onBlur, value}}) => (
-              <TextInput 
+              <Input 
                 placeholder="Full name"
                 onBlur={onBlur}
                 onChangeText={onChange}
@@ -87,8 +87,10 @@ const RegisterForm = (props) => {
           name="full_name"
         />
         {errors.full_name?.type === 'minLength' && (<Text>min length is 3 characters</Text>)}
-        <Button title="Sign in!" onPress={handleSubmit(register)}/>
-      </View>
+        <Button 
+          title="Sign in!" 
+          onPress={handleSubmit(register)}/>
+      </ Card>
       
   )
 }

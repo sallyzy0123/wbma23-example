@@ -1,9 +1,10 @@
-import React, {useContext, useEffect} from 'react';
-import {Button, Text, TextInput, View} from 'react-native';
+import React, {useContext} from 'react';
 import {MainContext} from '../contexts/MainContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useAuthentication} from '../hooks/ApiHooks';
 import {Controller, useForm} from 'react-hook-form';
+import {Button, Text, Input, Card} from '@rneui/themed';
+
 
 const LoginForm = () => {
     const {setIsLoggedIn, setUser} = useContext(MainContext);
@@ -32,13 +33,13 @@ const LoginForm = () => {
     };
 
   return (
-      <View>
-        <Text>Login Form</Text>
+      <Card>
+        <Card.Title>Login Form</Card.Title>
         <Controller 
           control={control}
           rules={{required: true, minLength: 3}}
           render={({field: {onChange, onBlur, value}}) => (
-              <TextInput 
+              <Input 
                 placeholder="Username"
                 onBlur={onBlur}
                 onChangeText={onChange}
@@ -53,7 +54,7 @@ const LoginForm = () => {
           control={control}
           rules={{required: true, minLength: 5}}
           render={({field: {onChange, onBlur, value}}) => (
-              <TextInput 
+              <Input 
                 placeholder="Password"
                 onBlur={onBlur}
                 onChangeText={onChange}
@@ -64,8 +65,11 @@ const LoginForm = () => {
           name="password"
         />
         {errors.password && <Text>Password (min.5 chars) is required.</Text>}
-        <Button title="Sign in!" onPress={handleSubmit(logIn)}/>
-      </View>
+        <Button 
+          title="Log in!" 
+          onPress={handleSubmit(logIn)}
+          />
+      </Card>
       
   )
 }

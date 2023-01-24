@@ -1,11 +1,9 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {useContext, useEffect, useState} from 'react';
-import {StyleSheet, SafeAreaView, Text, Button, Image} from 'react-native';
-import { MainContext} from '../contexts/MainContext';
+import {MainContext} from '../contexts/MainContext';
 import {useTag} from '../hooks/ApiHooks';
 import {uploadsUrl} from '../utils/variables';
-import {baseUrl} from '../utils/variables';
-import {Card, Icon, ListItem} from '@rneui/themed';
+import {Button, Card, Icon, ListItem} from '@rneui/themed';
 
 const Profile = () => {
   const {getFilesByTag} = useTag();
@@ -28,7 +26,7 @@ const Profile = () => {
 
   return (
     <Card>
-      <Card.Title>username: {user.username}</Card.Title>
+      <Card.Title>{user.username}</Card.Title>
       <Card.Image source={{uri: uploadsUrl + avatar}} />
       <ListItem>
         <Icon name="email"></Icon>
@@ -52,18 +50,6 @@ const Profile = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingTop: 40,
-  },
-  image: {
-    width: 200,
-    height: 300,
-  },
-});
+
 
 export default Profile;

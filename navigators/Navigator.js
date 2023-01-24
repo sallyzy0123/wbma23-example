@@ -20,11 +20,15 @@ const TabScreen = () => {
             tabBarIcon: ({focused, color, size}) => {
               let iconName;
               if (route.name === 'Home') {
-                iconName = 'home';
+                iconName = focused
+                ? 'home'
+                : 'home-outline';
               } else if (route.name === 'Profile') {
-                iconName = 'person';
+                iconName = focused
+                ? 'person'
+                : 'person-outline';
               }
-              return <Ionicons name={iconName} />
+              return <Ionicons name={iconName} size="23"/>
             },
           };
         }}>
