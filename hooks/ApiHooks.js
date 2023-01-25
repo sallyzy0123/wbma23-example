@@ -1,3 +1,4 @@
+import {result} from 'lodash';
 import {useEffect, useState} from 'react';
 import {MaskedViewBase} from 'react-native';
 import {baseUrl} from '../utils/variables';
@@ -85,8 +86,16 @@ const useUser = () => {
     } catch (error) {
        throw new Error('postUser: ' + error.message);
     }
- };
-  return {getUserByToken, postUser};
+  };
+  const checkUsername = async (username) => {
+    try {
+      const result = await doFetch(baseUrl + 'users/username/' + username);
+      return result.available;
+    } catch (error) {
+      throw new Error('checkUsername: ' + error.message);
+    }
+  };
+  return {getUserByToken, postUser, checkUsername};
 };
 
 const useTag = () => {
@@ -100,5 +109,6 @@ const useTag = () => {
   };
   return {getFilesByTag};
 };
+
 
 export {useMedia, useAuthentication, useUser, useTag};
