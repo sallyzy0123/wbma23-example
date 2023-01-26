@@ -2,6 +2,7 @@ import React from 'react';
 import {useUser} from '../hooks/ApiHooks';
 import {Controller, useForm} from 'react-hook-form';
 import {Card, Button, Text, Input} from '@rneui/themed';
+import {ScrollView} from 'react-native';
 
 const RegisterForm = (props) => {
     // const {setIsLoggedIn} = useContext(MainContext);
@@ -9,14 +10,22 @@ const RegisterForm = (props) => {
     const {postUser, checkUsername} = useUser();
     const {
         control, 
+        getValues,
         handleSubmit, 
-        formState: {errors}
+        formState: {errors},
     } = useForm({
-        defaultValues: {username: '', password: '', email: '', full_name: ''},
+        defaultValues: {
+          username: '', 
+          password: '', 
+          confirmPassword: '', 
+          email: '', 
+          full_name: ''
+        },
         mode: 'onBlur',
     });
 
     const register = async (registerData) => {
+        delete registerData.confirmPassword;
         console.log('Registering: ', registerData);
         try {
           const registerResult = await postUser(registerData);
@@ -38,6 +47,7 @@ const RegisterForm = (props) => {
     };
 
   return (
+    <ScrollView>
     <Card>
       <Card.Title>Registration Form</Card.Title>
         <Controller 
@@ -80,15 +90,48 @@ const RegisterForm = (props) => {
                 onChangeText={onChange}
                 value={value}
                 secureTextEntry={true}
-                errorMessage={errors.upassword && errors.password.message}
+                errorMessage={errors.password && errors.password.message}
               />
           )}
           name="password"
         />
 
+<Controller 
+          control={control}
+          rules={{
+            validate: (value) => {
+              if (value === getValues('password')){
+                return true;
+              } else {
+                return 'passwords must match';
+              }
+            },
+          }}
+          render={({field: {onChange, onBlur, value}}) => (
+              <Input 
+                placeholder="Confirm password"
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+                secureTextEntry={true}
+                errorMessage={errors.confirmPassword && errors.confirmPassword.message}
+              />
+          )}
+          name="confirmPassword"
+        />
+
         <Controller 
           control={control}
-          rules={{required: true}}
+          rules={{
+            required: {
+              value: true, 
+              message: 'email is required'
+            },
+            pattern: {
+              value: /^[a-z0-9.]{1,64}@[a-z0-9.-]{3,64}/i,
+              message: 'Must be a valid email',
+            },
+          }}
           render={({field: {onChange, onBlur, value}}) => (
               <Input 
                 placeholder="Email"
@@ -96,14 +139,20 @@ const RegisterForm = (props) => {
                 onChangeText={onChange}
                 value={value}
                 autoCapitalize="none"
+                errorMessage={errors.email && errors.email.message}
               />
           )}
           name="email"
         />
-        {errors.email?.type === 'required' && <Text>is required</Text>}
+
         <Controller 
           control={control}
-          rules={{minLength: 3}}
+          rules={{
+            minLength: {
+              value: 3, 
+              message: 'must be at least 3 chars.'
+            }
+          }}
           render={({field: {onChange, onBlur, value}}) => (
               <Input 
                 placeholder="Full name"
@@ -111,16 +160,16 @@ const RegisterForm = (props) => {
                 onChangeText={onChange}
                 value={value}
                 autoCapitalize="words"
+                errorMessage={errors.full_name && errors.full_name.message}
               />
           )}
           name="full_name"
         />
-        {errors.full_name?.type === 'minLength' && (<Text>min length is 3 characters</Text>)}
         <Button 
           title="Register!" 
           onPress={handleSubmit(register)}/>
       </ Card>
-      
+      </ScrollView>
   )
 }
 

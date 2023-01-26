@@ -7,6 +7,7 @@ import {useUser} from '../hooks/ApiHooks';
 import LoginForm from '../components/LoginForm';
 import RegisterForm from '../components/RegisterForm';
 import {Button, Text} from '@rneui/themed';
+import {ScrollView} from 'react-native';
 
 const Login = ({navigation}) => { 
   const {setIsLoggedIn, setUser} = useContext(MainContext);
@@ -33,6 +34,7 @@ const Login = ({navigation}) => {
   }, []);
 
   return (
+    <ScrollView>
     <TouchableOpacity onPress={() => Keyboard.dismiss()} activeOpacity={1}>
       <KeyboardAvoidingView 
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
@@ -50,7 +52,7 @@ const Login = ({navigation}) => {
         />
       </KeyboardAvoidingView>
     </TouchableOpacity>
-    
+    </ScrollView>
   );
 };
 
