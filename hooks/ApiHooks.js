@@ -37,7 +37,24 @@ const useMedia = () => {
     loadMedia();
   }, []);
 
-  return {mediaArray};
+  const postMedia = async (fileData, token)=> {
+    const options = {
+      method: 'post',
+      headers: {
+        'x-access-token': token,
+        'Content-Type': 'multipart/form-data',
+      },
+      body: fileData,
+    };
+    try {
+      const loginResult = await doFetch(baseUrl + 'meida', options);
+      return loginResult;
+   } catch (error) {
+      throw new Error('postUpload: ' + error.message);
+   }
+ }  
+ 
+ return {mediaArray, postMedia};
 };
 
 const useAuthentication = () => {

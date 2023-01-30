@@ -3,7 +3,7 @@ import {MainContext} from '../contexts/MainContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useAuthentication} from '../hooks/ApiHooks';
 import {Controller, useForm} from 'react-hook-form';
-import {Button, Text, Input, Card} from '@rneui/themed';
+import {Button, Input, Card} from '@rneui/themed';
 
 
 const LoginForm = () => {
