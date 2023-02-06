@@ -125,14 +125,14 @@ const Upload = ({navigation}) => {
       <TouchableOpacity onPress={() => Keyboard.dismiss()} activeOpacity={1}>
         <Card>
           {mediafile.type === 'video' ? (
-            <Video 
-              ref={video} 
+            <Video
+              ref={video}
               source={{uri: mediafile.uri}}
-              style={{width:'100%', height: 200}}
-              resizeMode="contain"
+              style={{width: '100%', height: 200}}
+              resizeMode="cover"
               useNativeControls
               onError={(error) => {
-                console.log(error)
+                console.log(error);
               }}
             />
           ) : (
