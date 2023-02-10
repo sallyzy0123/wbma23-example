@@ -20,6 +20,7 @@
     "expo": "~47.0.12",
     "expo-av": "~13.0.2",
     "expo-image-picker": "~14.0.2",
+    "expo-screen-orientation": "~5.0.1",
     "expo-status-bar": "~1.4.2",
     "react": "18.1.0",
     "react-hook-form": "^7.42.1",
