@@ -4,8 +4,10 @@ import {MainContext} from '../contexts/MainContext';
 import {useTag} from '../hooks/ApiHooks';
 import {uploadsUrl} from '../utils/variables';
 import {Button, Card, Icon, ListItem} from '@rneui/themed';
+import MyFiles from './MyFiles';
+import PropTypes from 'prop-types';
 
-const Profile = () => {
+const Profile = ({navigation}) => {
   const {getFilesByTag} = useTag();
   const {setIsLoggedIn, user, setUser} = useContext(MainContext);
   const [avatar, setAvatar] = useState('');
@@ -46,10 +48,18 @@ const Profile = () => {
           console.error('clearing asyncstoreage failed', error);
         }
       }}/>
+      <Button 
+        title="My Files" 
+        onPress={() => {
+          navigation.navigate('MyFiles')
+        }}
+      />
     </Card>
   );
 };
 
-
+Profile.propTypes = {
+  navigation: PropTypes.object,
+};
 
 export default Profile;
